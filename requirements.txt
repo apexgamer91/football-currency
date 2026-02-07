@@ -1,5 +1,4 @@
-flask
-jinja2==3.1.2
-werkzeug==3.0.1
-flask-socketio
+Flask
 gunicorn
+SQLAlchemy
+psycopg2-binary
