@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Football Currency{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- Top Navbar -->
+  <div class="navbar">
+    <div class="logo">⚽ Football Currency</div>
+    <div class="nav-links">
+      {% if session.get('role') == 'player' %}
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('friends') }}">My Friends</a>
+        <a href="{{ url_for('player_list') }}">Player List</a>
+        <a href="{{ url_for('chat') }}">Chat</a>
+      <a href="{{ url_for('chat', friendID=1) }}">Chat</a>
+        <a href="{{ url_for('player_notice') }}">Notice</a>
+        <a href="{{ url_for('support') }}">Support</a>
+        <a href="{{ url_for('shop') }}">Shop</a>
+        <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% elif session.get('role') == 'admin' %}
+        <a href="{{ url_for('admin_panel') }}">Admin Panel</a>
+        <a href="{{ url_for('admin_shop') }}">Admin Shop</a>
+        <a href="{{ url_for('admin_players') }}">Manage Players</a>
+        <a href="{{ url_for('admin_notice') }}">Admin Notice</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Signup</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Flash Messages -->
+  <div class="flash-messages">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- Page Content -->
+  <div class="content">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

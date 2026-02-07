@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Friends</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% extends "base.html" %}
+{% block title %}My Friends{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>My Friends</h2>
+  <ul>
+    {% for friend in friends %}
+      <li>{{ friend['username'] }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
+</body>
+</html>

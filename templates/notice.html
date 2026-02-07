@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notice-football currency</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% extends "base.html" %}
+{% block title %}Notice{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Notices</h2>
+  <ul>
+    {% for notice in notices %}
+      <li><strong>{{ notice['title'] }}</strong> - {{ notice['content'] }} ({{ notice['timestamp'] }})</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
+</body>
+</html>

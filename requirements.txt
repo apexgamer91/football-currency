@@ -1,0 +1,6 @@
+flask
+sqlite3-binary
+jinja2==3.1.2
+werkzeug==3.0.1
+flask-socketio
+gunicorn

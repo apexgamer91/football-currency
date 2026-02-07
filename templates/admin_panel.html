@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% extends "base.html" %}
+{% block title %}Admin Panel{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Admin Dashboard</h2>
+  <p>Manage players, shop items, and notices here.</p>
+</div>
+{% endblock %}
+</body>
+</html>

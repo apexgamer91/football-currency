@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Players</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% extends "base.html" %}
+{% block title %}Admin - Manage Players{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Manage Players</h2>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Status</th>
+      <th>Balance</th>
+      <th>Actions</th>
+    </tr>
+    {% for player in players %}
+    <tr>
+      <td>{{ player['playerID'] }}</td>
+      <td>
+        {% if player['profile_pic'] %}
+          <img src="{{ url_for('static', filename='uploads/' ~ player['profile_pic']) }}"
+               alt="Pic" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;">
+        {% endif %}
+        {{ player['username'] }}
+      </td>
+      <td>{{ "Banned" if player['is_banned'] else "Active" }}</td>
+      <td>{{ player['balance'] }}</td>
+      <td>
+        <form method="POST" style="display:inline;">
+          <input type="hidden" name="player_id" value="{{ player['playerID'] }}">
+          <input type="hidden" name="action" value="ban">
+          <button type="submit">Ban</button>
+        </form>
+        <form method="POST" style="display:inline;">
+          <input type="hidden" name="player_id" value="{{ player['playerID'] }}">
+          <input type="hidden" name="action" value="unban">
+          <button type="submit">Unban</button>
+        </form>
+        <form method="POST" style="display:inline;">
+          <input type="hidden" name="player_id" value="{{ player['playerID'] }}">
+          <input type="hidden" name="action" value="reset_balance">
+          <button type="submit">Reset Balance</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
+</body>
+</html>

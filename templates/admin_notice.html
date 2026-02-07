@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% extends "base.html" %}
+{% block title %}Admin Notice{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Post a Notice</h2>
+  <form method="POST">
+    <label>Notice Title</label>
+    <input type="text" name="title" required>
+    <label>Notice Content</label>
+    <textarea name="content" required></textarea>
+    <button type="submit" class="btn btn-primary">Publish Notice</button>
+  </form>
+
+  <h3>Existing Notices</h3>
+  <ul>
+    {% for notice in notices %}
+      <li><strong>{{ notice['title'] }}</strong> - {{ notice['content'] }} ({{ notice['timestamp'] }})</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
+</body>
+</html>

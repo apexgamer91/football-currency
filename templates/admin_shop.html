@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% extends "base.html" %}
+{% block title %}Admin Shop{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Admin Shop Verification</h2>
+  <table>
+    <tr>
+      <th>Item ID</th>
+      <th>Player</th>
+      <th>Item Name</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+    {% for item in items %}
+    <tr>
+      <td>{{ item['id'] }}</td>
+      <td>{{ item['player'] }}</td>
+      <td>{{ item['name'] }}</td>
+      <td>{{ item['status'] }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('verify_item', item_id=item['id']) }}">
+          <button type="submit" class="btn btn-primary">Verify</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
+</body>
+</html>

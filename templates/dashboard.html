@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="navbar">
+     <div class="logo"><a href="dashboard.html">⚽ Football Currency</a></div>
+    <div>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+        <a href="{{ url_for('friends') }}">Friends</a>
+        <a href="{{ url_for('support') }}">Support</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</div>
+
+<div class="panel">
+    <h2>Welcome, {{ user['username'] }}</h2>
+    <p><strong>Balance:</strong> {{ user['balance'] }}</p>
+    <p><strong>Bank Cash:</strong> {{ user['bank_cash'] }}</p>
+    <p><strong>FC Coins:</strong> {{ user['fc_coin'] }}</p>
+</div>
+</body>
+</html>

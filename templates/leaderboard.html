@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+{% block content %}
+{% if player['profile_pic'] %}
+  <img src="{{ url_for('static', filename='uploads/' ~ player['profile_pic']) }}"
+       alt="Pic" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;">
+{% endif %}
+{{ player['username'] }}
+<div class="panel">
+  <h2>Leaderboard</h2>
+  <table>
+    <tr>
+      <th>Rank</th>
+      <th>Player</th>
+      <th>Balance</th>
+    </tr>
+    {% for player in leaderboard %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ player['username'] }}</td>
+      <td>{{ player['balance'] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
+</body>
+</html>
+</html>

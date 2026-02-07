@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<!-- Show Profile Picture -->
+{% if user['profile_pic'] %}
+  <img src="{{ url_for('static', filename='uploads/' ~ user['profile_pic']) }}"
+       alt="Profile Picture" style="width:100px;height:100px;border-radius:50%;">
+{% else %}
+  <p>No profile picture uploaded.</p>
+{% endif %}
+
+<!-- Upload New Picture -->
+<form method="POST" action="{{ url_for('upload_pic') }}" enctype="multipart/form-data">
+  <input type="file" name="file" accept="image/*" required>
+  <button type="submit" class="btn btn-primary">Change Picture</button>
+</form>
+<div class="panel">
+  <h2>Player Profile</h2>
+  {% if user %}
+    <p><strong>Player ID:</strong> {{ user['playerID'] }}</p>
+    <p><strong>Username:</strong> {{ user['username'] }}</p>
+    <p><strong>Balance:</strong> {{ user['balance'] }}</p>
+    <p><strong>Bank Cash:</strong> {{ user['bank_cash'] }}</p>
+    <p><strong>Cash:</strong> {{ user['cash'] }}</p>
+    <p><strong>FC Coins:</strong> {{ user['fc_coin'] }}</p>
+    <p><strong>Card Limit:</strong> {{ user['card_limit'] }}</p>
+    <p><strong>Registered:</strong> {{ user['registration_date'] }}</p>
+    {% if user['expiration_date'] %}
+      <p><strong>Expiration Date:</strong> {{ user['expiration_date'] }}</p>
+    {% endif %}
+    {% if user['is_banned'] == 1 %}
+      <p style="color:red;"><strong>Status:</strong> Banned</p>
+    {% else %}
+      <p><strong>Status:</strong> Active</p>
+    {% endif %}
+  {% else %}
+    <p>No user data found.</p>
+  {% endif %}
+</div>
+{% endblock %}
+</body>
+</html>

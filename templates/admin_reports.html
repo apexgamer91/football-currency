@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - Reports</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Player Reports</h2>
+    <table>
+        <tr>
+            <th>Report ID</th>
+            <th>Reporter ID</th>
+            <th>Reported Username</th>
+            <th>Reason</th>
+            <th>Status</th>
+        </tr>
+        {% for report in reports %}
+        <tr>
+            <td>{{ report['reportID'] }}</td>
+            <td>{{ report['reporterID'] }}</td>
+            <td>{{ report['reportedUser'] }}</td>
+            <td>{{ report['reason'] }}</td>
+            <td>{{ report['status'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+ <div class="bottom-nav">
+        <a href="/admin_panel">🏠 Dashboard</a>
+        <a href="/admin/players">👥 Players</a>
+        <a href="/friends">🤝 Friends</a>
+        <a href="/leaderboard">🏆 Leaderboard</a>
+        <a href="/admin/support">📞 Support</a>
+        <a href="/profile">👤 Profile</a>
+        <a href="/admin/reports">📞 View Reports</a>
+
+</body>
+</html>

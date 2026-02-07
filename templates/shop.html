@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop-Football Currency</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% extends "base.html" %}
+{% block title %}Shop{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2>Shop</h2>
+  <form method="POST">
+    <label>Item Name</label>
+    <input type="text" name="name" required>
+    <button type="submit" class="btn btn-primary">Add Item</button>
+  </form>
+
+  <h3>My Items</h3>
+  <ul>
+    {% for item in items %}
+      <li>{{ item['name'] }} - Status: {{ item['status'] }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
+</body>
+</html>

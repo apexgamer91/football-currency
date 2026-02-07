@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% if player['profile_pic'] %}
+  <img src="{{ url_for('static', filename='uploads/' ~ player['profile_pic']) }}"
+       alt="Pic" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;">
+{% endif %}
+{{ player['username'] }}
+<div class="navbar">
+        <div class="logo"><a href="dashboard.html">⚽ Football Currency</a></div>
+        <div class="nav-links">
+            {% if session.get('role') == 'player' %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('profile') }}">Profile</a>
+                <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+                <a href="{{ url_for('friends') }}">Friends</a>
+                <a href="{{ url_for('player_support') }}">Support</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </div>
+        </div>
+    <h2>{{ player['username'] }}</h2>
+    <p>PlayerID: {{ player['playerID'] }}</p>
+    <a href="/add_friend/{{ player['playerID'] }}">Add Friend</a>
+</body>
+</html>

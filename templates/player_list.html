@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Players</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% extends "base.html" %}
+{% block title %}Player List{% endblock %}
+{% block content %}
+{% if player['profile_pic'] %}
+  <img src="{{ url_for('static', filename='uploads/' ~ player['profile_pic']) }}"
+       alt="Pic" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;">
+{% endif %}
+{{ player['username'] }}
+<div class="panel">
+  <h2>All Players</h2>
+  <table>
+    <tr>
+      <th>Player ID</th>
+      <th>Username</th>
+      <th>Status</th>
+    </tr>
+    {% for player in players %}
+    <tr>
+      <td>{{ player['playerID'] }}</td>
+      <td>{{ player['username'] }}</td>
+      <td>{% if player['is_banned'] == 1 %}Banned{% else %}Active{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
+</body>
+</html>

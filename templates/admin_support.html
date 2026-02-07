@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - Support Settings</title>
+</head>
+<body>
+<div class="panel">
+    <h2>Support Settings</h2>
+    <form method="POST">
+        <label>Contact Number</label>
+        <input type="text" name="contact_number" required>
+        <label>Help Text</label>
+        <input type="text" name="help_text" required>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <h3>Previous Entries</h3>
+    <ul>
+        {% for entry in support_entries %}
+        <li>{{ entry['contact_number'] }} — {{ entry['help_text'] }}</li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>
