@@ -11,6 +11,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fc.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
 # Models
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -20,10 +21,12 @@ class User(db.Model):
     balance = db.Column(db.Integer, default=100)
     profile_pic = db.Column(db.String(200), nullable=True)
 
+
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Integer, nullable=False)
+
 
 # Helpers
 def login_required(f):
@@ -32,8 +35,10 @@ def login_required(f):
             flash("Login required")
             return redirect(url_for("login"))
         return f(*args, **kwargs)
+
     wrapper.__name__ = f.__name__
     return wrapper
+
 
 def admin_required(f):
     def wrapper(*args, **kwargs):
@@ -42,13 +47,16 @@ def admin_required(f):
             flash("Admin access required")
             return redirect(url_for("dashboard"))
         return f(*args, **kwargs)
+
     wrapper.__name__ = f.__name__
     return wrapper
+
 
 # Routes
 @app.route("/")
 def home():
     return render_template("home.html")
+
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -61,6 +69,7 @@ def signup():
         flash("Signup successful, please login")
         return redirect(url_for("login"))
     return render_template("signup.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -76,11 +85,13 @@ def login():
             flash("Invalid credentials")
     return render_template("login.html")
 
+
 @app.route("/logout")
 def logout():
     session.clear()
     flash("Logged out")
     return redirect(url_for("home"))
+
 
 @app.route("/dashboard")
 @login_required
@@ -88,11 +99,13 @@ def dashboard():
     user = User.query.get(session["user_id"])
     return render_template("dashboard.html", user=user)
 
+
 @app.route("/shop")
 @login_required
 def shop():
     items = Item.query.all()
     return render_template("shop.html", items=items)
+
 
 @app.route("/buy/<int:item_id>")
 @login_required
@@ -107,20 +120,24 @@ def buy(item_id):
         flash("Not enough balance")
     return redirect(url_for("shop"))
 
+
 @app.route("/friends")
 @login_required
 def friends():
     return render_template("friends.html")
+
 
 @app.route("/chat")
 @login_required
 def chat():
     return render_template("chat.html")
 
+
 @app.route("/support")
 @login_required
 def support():
     return render_template("support.html")
+
 
 @app.route("/leaderboard")
 @login_required
@@ -128,11 +145,13 @@ def leaderboard():
     users = User.query.order_by(User.balance.desc()).all()
     return render_template("leaderboard.html", users=users)
 
+
 @app.route("/profile")
 @login_required
 def profile():
     user = User.query.get(session["user_id"])
     return render_template("profile.html", user=user)
+
 
 # ... (imports, config, models, helpers remain the same)
 
@@ -144,11 +163,13 @@ def admin_panel():
     items = Item.query.all()
     return render_template("admin.html", users=users, items=items)
 
+
 @app.route("/admin/users")
 @admin_required
 def admin_users():
     users = User.query.all()
     return render_template("admin_users.html", users=users)
+
 
 @app.route("/admin/user/<int:user_id>/delete")
 @admin_required
@@ -160,6 +181,7 @@ def delete_user(user_id):
         flash("User deleted")
     return redirect(url_for("admin_users"))
 
+
 @app.route("/admin/user/<int:user_id>/promote")
 @admin_required
 def promote_user(user_id):
@@ -170,11 +192,13 @@ def promote_user(user_id):
         flash("User promoted to admin")
     return redirect(url_for("admin_users"))
 
+
 @app.route("/admin/items")
 @admin_required
 def admin_items():
     items = Item.query.all()
     return render_template("admin_items.html", items=items)
+
 
 @app.route("/admin/item/add", methods=["GET", "POST"])
 @admin_required
@@ -189,6 +213,7 @@ def add_item():
         return redirect(url_for("admin_items"))
     return render_template("add_item.html")
 
+
 @app.route("/admin/item/<int:item_id>/edit", methods=["GET", "POST"])
 @admin_required
 def edit_item(item_id):
@@ -200,6 +225,7 @@ def edit_item(item_id):
         flash("Item updated")
         return redirect(url_for("admin_items"))
     return render_template("edit_item.html", item=item)
+
 
 @app.route("/admin/item/<int:item_id>/delete")
 @admin_required
@@ -213,7 +239,7 @@ def delete_item(item_id):
 
 
 # Initialize DB with sample data
-@app.before_first_request
+@app.route("/admin/item/<int:item_id>/promote")
 def setup():
     db.create_all()
     if not Item.query.first():
@@ -224,6 +250,8 @@ def setup():
         ])
         db.session.commit()
 
+
 if __name__ == "__main__":
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
