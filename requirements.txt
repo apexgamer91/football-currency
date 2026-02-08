@@ -1,5 +1,5 @@
-Flask
+flask
+flask-login
+flask-sqlalchemy
+werkzeug
 gunicorn
-SQLAlchemy
-psycopg2-binary
-sqlite3
