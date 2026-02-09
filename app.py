@@ -55,7 +55,7 @@ def admin_required(f):
 # Routes
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("login.html")
 
 
 @app.route("/signup", methods=["GET", "POST"])
