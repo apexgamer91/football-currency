@@ -210,6 +210,23 @@ def leaderboard():
 def admin_panel():
     return render_template("admin_panel.html")
 
+@app.route("/upload_pic", methods=["POST"])
+@login_required(role="player")
+def upload_pic():
+    file = request.files["profile_pic"]
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        file.save(filepath)
+
+        conn = get_db()
+        conn.execute("UPDATE players SET profile_pic=? WHERE playerID=?", (filename, session["playerID"]))
+        conn.commit()
+        conn.close()
+
+        flash("Profile picture updated!")
+    return redirect(url_for("profile"))
+
 # --- Admin Shop ---
 @app.route("/admin_shop", methods=["GET","POST"])
 @login_required(role="admin")
